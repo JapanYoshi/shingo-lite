@@ -1,0 +1,53 @@
+/* grid layout */
+.grid-root {
+  --grid-letter-w: calc(var(--unit) * 4.5);
+  --grid-letter-h: calc(var(--unit) * 4.5);
+  --grid-letter-margin: calc(var(--unit) * 0.5);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--grid-letter-margin);
+}
+
+.grid-row:last-child {
+  margin-bottom: 0;
+}
+
+/* grid letter */
+.grid-letter {
+  width: var(--grid-letter-w);
+  height: var(--grid-letter-h);
+  line-height: var(--grid-letter-h);
+  margin-right: var(--grid-letter-margin);
+  border-radius: calc(var(--grid-letter-w) * 0.0625);
+  color: var(--letter-text);
+}
+
+.grid-letter:last-child {
+  margin-right: 0;
+}
+
+.grid-letter.clue0 {
+  background: var(--clue-none);
+}
+.grid-letter.clue1 {
+  background: var(--clue-miss);
+}
+.grid-letter.clue2 {
+  background: var(--clue-graze);
+}
+.grid-letter.clue3 {
+  background: var(--clue-hit);
+}
+.grid-letter.clue4 {
+  background: var(--clue-blank);
+}

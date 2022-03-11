@@ -21,28 +21,30 @@ class Keyboard extends React.Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
-  handleKeyPress(event) {
-    console.log("Keyboard.handleKeyPress(", event, ");");
+  handleKeyPress(label) {
+    console.log("Keyboard.handleKeyPress(", label, ");");
     /*
     this.setState({
       active: true
     })
     */
-   event.preventDefault();
   }
 
   render() {
+    let i = 0;
     const rows = this.LAYOUT.map((row) => {
       let keys = row.map((text) => {
-        if (text == "DELETE") {
-          return <Key label="⌫" onClick={this.handleKeyPress}></Key>
-        } else if (text == "RETURN") {
-          return <Key label="⏎" onClick={this.handleKeyPress}></Key>
-        } else {
-          return <Key label={text} onClick={this.handleKeyPress}></Key>
+        switch (text) {
+        case "DELETE":
+          return <Key key={text} label="⌫"    onClickFunc={() => {this.handleKeyPress(text)}}></Key>
+        case "RETURN":
+          return <Key key={text} label="⏎"    onClickFunc={() => {this.handleKeyPress(text)}}></Key>
+        default:
+          return <Key key={text} label={text} onClickFunc={() => {this.handleKeyPress(text)}}></Key>
         }
       });
-      return <div className="kb-row">
+      i += 1;
+      return <div key={`row${i}`} className="kb-row">
         {keys}
       </div>;
     })

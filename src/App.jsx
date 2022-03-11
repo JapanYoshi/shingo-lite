@@ -19,11 +19,26 @@ class App extends React.Component {
     super(props);
     this.state = {
       shavianMode: 1,
+      ingame: false,
     };
     this.menu = React.createRef();
     this.game = React.createRef();
     this.handleAbout = this.handleAbout.bind(this);
     this.handleSetShavian = this.handleSetShavian.bind(this);
+  }
+
+  startGame(letterCount) {
+    console.log("letterCount =", letterCount);
+    this.setState({
+      ingame: true
+    });
+    this.game.current.startGame(letterCount);
+  }
+
+  exitGame() {
+    this.setState({
+      ingame: false
+    })
   }
 
   handleAbout(event) {
@@ -44,8 +59,9 @@ class App extends React.Component {
   }
 
   render() {
+    let classes = "App" + (this.state.ingame ? " ingame" : "");
     return (
-      <div id="App" className="App">
+      <div id="App" className={classes}>
         <header className="App-header">
           <button className="App-about" type="button" onClick={this.handleAbout}>
             {this.STR.ABOUT[this.state.shavianMode]}
@@ -55,8 +71,8 @@ class App extends React.Component {
             {this.STR.SWITCH[this.state.shavianMode]}
           </button>
         </header>
-        <Menu ref={this.menu}></Menu>
-        <Game ref={this.game}></Game>
+        <Menu ref={this.menu} parent={this}></Menu>
+        <Game ref={this.game} parent={this}></Game>
       </div>
     );
   }

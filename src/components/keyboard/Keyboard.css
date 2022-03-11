@@ -1,10 +1,11 @@
 .kb-root {
-  --key-margin: 0.25rem;
-  --key-height: 2rem;
-  --key-width: 2rem;
+  --key-margin: calc(var(--unit) * 0.5);
+  --key-height: calc(var(--unit) * 3.5);
+  --key-width: calc(var(--unit) * 4);
+  font-size: calc(var(--unit) * 2);
   margin: 0 auto;
   width: calc(var(--key-width) * 10 + var(--key-margin) * 9);
-  height: calc(var(--key-width) * 5 + var(--key-margin) * 4);
+  height: calc(var(--key-height) * 5 + var(--key-margin) * 4);
 }
 
 .kb-row {

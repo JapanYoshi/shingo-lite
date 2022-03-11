@@ -16,6 +16,7 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      parent: props.parent ?? undefined,
       shavianMode: 1,
       charCount: 0,
     };
@@ -51,7 +52,7 @@ class Menu extends React.Component {
 
     });
     */
-    document.getElementById("App").classList.add("ingame")
+    this.state.parent.startGame(letterCount);
     event.preventDefault();
   }
 
@@ -80,6 +81,7 @@ class Menu extends React.Component {
           <li>☺ {this.STR.DX_READ[this.state.shavianMode]}</li>
           <li>☹ {this.STR.DX_SLOW[this.state.shavianMode]}</li>
         </ul>
+        <a href="https://haitouch.ga/me/shingo/index">{this.STR.DX_PLAY[this.state.shavianMode]}</a>
       </div>
     )
   }

@@ -5,22 +5,24 @@ class Key extends React.Component {
     super(props);
 
     this.state = {
+      onClickFunc: props.onClickFunc ?? (() => {}),
       label: props.label ?? "A",
       clue: 0,
     };
-    //this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handlePress = this.handlePress.bind(this);
     this.handleSetClue = this.handleSetClue.bind(this);
   }
 
-  // handleKeyPress(event) {
-  //   console.log("Key.handleKeyPress(", event, ");\n", "Key pressed:", this.state.label)
-  //   /*
-  //   this.setState({
-  //     active: true
-  //   })
-  //   */
-  //   event.preventDefault();
-  // }
+  handlePress(event) {
+    console.log("Key.handlePress(", event, ");\n", "Key pressed:", this.state.label)
+    this.state.onClickFunc.call(this);
+    /*
+    this.setState({
+      active: true
+    })
+    */
+    event.preventDefault();
+  }
 
   handleSetClue(id) {
     console.log("Key.handleSetClue(", id, ");\nKey styled:", this.state.label);
@@ -35,7 +37,7 @@ class Key extends React.Component {
       classes += " kb-clue-" + this.state.clue;
     }
     return (
-      <button type="button" className={classes}>
+      <button type="button" className={classes} onClick={this.handlePress}>
         {this.state.label}
       </button>
     )

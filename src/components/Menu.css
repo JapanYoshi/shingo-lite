@@ -2,6 +2,10 @@
 #menu-root {
   display: flex;
   flex-direction: column;
+  
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #App.ingame #menu-root {
@@ -15,7 +19,7 @@
   align-items: center;
 }
 .menu-length > button {
-  width: 7.5rem;
-  height: 2.5rem;
-  margin: 0.25rem 0;
+  width: calc(var(--unit) * 12);
+  height: calc(var(--unit) * 3);
+  margin: calc(var(--unit) * 0.25) 0;
 }

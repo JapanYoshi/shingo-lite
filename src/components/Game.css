@@ -2,15 +2,23 @@
 .game-root {
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex: 1 1 auto;
 }
   
 #App:not(.ingame) .game-root {
   display: none;
 }
 
-/* size the grid and keyboard */
+/* size the grid, status, and keyboard */
 .grid-root {
   flex: 1 0 auto;
+  margin-bottom: calc(var(--unit) * 0.25);
+}
+
+.game-status {
+  margin: calc(var(--unit) * 0.5);
 }
 
 .kb-root {

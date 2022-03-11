@@ -1,40 +1,24 @@
-/* Override button styling */
-button {
-  font-size: inherit;
-  font-family: inherit;
-  color: var(--letter-text);
-  background: var(--letter-blank);
-  border: none;
-  border-radius: 0.125rem;
-}
-
-button:focus,
-button:focus-within     {
-  outline: 0.125rem solid var(--focus);
-  outline-offset: 0.125rem; 
-}
-
 /* Header */
 .App {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   text-align: center;
-  --header-height: 4rem;
+  --header-height: calc(var(--unit) * 6);
 }
 
 .App-about, .App-mode {
   position: absolute;
-  width: 5rem;
-  height: 2rem;
+  width: calc(var(--unit) * 7);
+  height: calc(var(--unit) * 3);
 }
 
 .App-about {
-  left: 0.25rem;
+  left: calc(var(--unit) * 0.25);
 }
 
 .App-mode {
-  right: 0.25rem;
+  right: calc(var(--unit) * 0.25);
 }
 
 .App-logo {
@@ -42,16 +26,9 @@ button:focus-within     {
   height: var(--header-height);
   pointer-events: none;
 }
-
-.game-root {
-  flex: 1 0 auto;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+/*
+@media (prefers-reduced-motion: no-preference) {}
+*/
 
 .App-header {
   background-color: var(--bg-dark);

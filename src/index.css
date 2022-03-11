@@ -1,13 +1,21 @@
 :root {
+  /* global */
   --bg: #3b2c40;
   --bg-dark: #3b2c40;
   --text: #ffffff;
+  /* letter tiles */
   --letter-text: #000000;
-  --letter-blank: #d2d2d2;
-  --letter-miss: #7c8185;
-  --letter-graze: #fcc946;
-  --letter-hit: #7be695;
+  --clue-blank: #6b5d70;
+  --clue-none: #d8ccd5;
+  --clue-miss: #7c8185;
+  --clue-graze: #fcc946;
+  --clue-hit: #7be695;
+  /* buttons */
   --focus: #ff4080;
+  --button-bg: var(--clue-none);
+  --button-pressed: #80e0ff;
+  /* sizing */
+  --unit: calc(min(4vw, 3vh) * 0.5);
 }
 
 body {
@@ -18,8 +26,29 @@ body {
   left: 0;
   margin: 0;
   font-family: Inter Alia;
+  font-size: calc(var(--unit) * 2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg);
   color: var(--text);
+}
+
+/* Override button styling */
+button {
+  font-size: inherit;
+  font-family: inherit;
+  color: var(--letter-text);
+  background: var(--button-bg);
+  border: none;
+  border-radius: calc(var(--unit) * 0.25);
+}
+
+button:focus,
+button:focus-within {
+  outline: calc(var(--unit) * 0.25) solid var(--focus);
+  outline-offset: calc(var(--unit) * 0.25); 
+}
+
+button:active {
+  background: var(--button-pressed);
 }
