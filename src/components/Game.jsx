@@ -1,5 +1,6 @@
 import React from "react";
-import Keyboard from "./Keyboard.jsx";
+import Grid from "./grid/Grid.jsx";
+import Keyboard from "./keyboard/Keyboard.jsx";
 import "./Game.css";
 
 class Game extends React.Component {
@@ -26,7 +27,7 @@ class Game extends React.Component {
   render() {
     return (
       <div className="game-root">
-        Game
+        <Grid></Grid>
         <Keyboard></Keyboard>
       </div>
     )

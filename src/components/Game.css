@@ -7,3 +7,12 @@
 #App:not(.ingame) .game-root {
   display: none;
 }
+
+/* size the grid and keyboard */
+.grid-root {
+  flex: 1 0 auto;
+}
+
+.kb-root {
+  flex: 0 0 auto;
+}

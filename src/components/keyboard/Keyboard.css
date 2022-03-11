@@ -1,0 +1,28 @@
+.kb-root {
+  --key-margin: 0.25rem;
+  --key-height: 2rem;
+  --key-width: 2rem;
+  margin: 0 auto;
+  width: calc(var(--key-width) * 10 + var(--key-margin) * 9);
+  height: calc(var(--key-width) * 5 + var(--key-margin) * 4);
+}
+
+.kb-row {
+  width: 100%;
+  height: var(--key-height);
+  margin-bottom: var(--key-margin);
+}
+
+.kb-row:last-child {
+  margin-bottom: 0;
+}
+
+.kb-key {
+  width: var(--key-width);
+  height: var(--key-height);
+  margin-right: var(--key-margin);
+}
+
+.kb-key:last-child {
+  margin-right: 0;
+}

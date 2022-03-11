@@ -16,6 +16,9 @@ button:focus-within     {
 
 /* Header */
 .App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   text-align: center;
   --header-height: 4rem;
 }
@@ -38,6 +41,10 @@ button:focus-within     {
   width: auto;
   height: var(--header-height);
   pointer-events: none;
+}
+
+.game-root {
+  flex: 1 0 auto;
 }
 
 @media (prefers-reduced-motion: no-preference) {
