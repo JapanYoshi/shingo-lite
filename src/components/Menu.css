@@ -1,0 +1,21 @@
+/* display toggle */
+#menu-root {
+  display: flex;
+  flex-direction: column;
+}
+
+#App.ingame #menu-root {
+  display: none;
+}
+
+/* letter count picker buttons */
+.menu-length {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.menu-length > button {
+  width: 7.5rem;
+  height: 2.5rem;
+  margin: 0.25rem 0;
+}

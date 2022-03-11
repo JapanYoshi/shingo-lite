@@ -1,0 +1,9 @@
+/* display toggle */
+.game-root {
+  display: flex;
+  flex-direction: column;
+}
+  
+#App:not(.ingame) .game-root {
+  display: none;
+}

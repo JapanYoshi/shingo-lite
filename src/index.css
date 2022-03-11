@@ -1,0 +1,20 @@
+:root {
+  --bg: #3b2c40;
+  --bg-dark: #3b2c40;
+  --text: #ffffff;
+  --letter-text: #000000;
+  --letter-blank: #d2d2d2;
+  --letter-miss: #7c8185;
+  --letter-graze: #fcc946;
+  --letter-hit: #7be695;
+  --focus: #ff4080;
+}
+
+body {
+  margin: 0;
+  font-family: Inter Alia;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--text);
+}
