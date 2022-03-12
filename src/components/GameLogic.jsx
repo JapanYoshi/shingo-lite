@@ -91,6 +91,9 @@ class GameLogic extends React.Component {
     console.log("GameLogic.randomSecret: Secret index is", index);
     return target[index];
   }
+  // Searches the guessable word list. Returns an Array of 2 elements.
+  // If it's in there, returns the index of the word and the Latin-script transcription.
+  // If it's not in there, returns -1 and an empty string.
   isGuessable(text, charCount) {
     // binary search the word list
     let target = this.wordList[`char${charCount}`].guessable;
@@ -100,17 +103,59 @@ class GameLogic extends React.Component {
       let mid = (low + high) >> 1;
       console.log("GameLogic.isGuessable", mid, target[mid][0], text);
       if (target[mid][0] === text) {
-        return mid;
+        return [mid, target[mid][1]];
       } else if (target[mid][0] > text) {
         high = mid - 1;
       } else {
         low = mid + 1;
       }
     }
-    if (target[low] == text) {
-      return low;
+    if (target[low][0] == text) {
+      return [low, target[low][1]];
     }
-    return -1;
+    return [-1, ""];
+  }
+
+  getClues(guess, secret) {
+    let clues = new Array(secret.length);
+    // get hits
+    for (let i = 0; i < secret.length; i++) {
+      if (secret[i] == guess[i]) {
+        secret[i] = "";
+        guess[i] = "";
+        clues[i] = 3;
+      } else {
+        clues[i] = 1;
+      }
+    }
+    // get grazes
+    for (let diff = 1; diff < secret.length - 1; diff++) {
+      for (let i = 0; i < secret.length; i++) {
+        if (guess[i] === "") {continue;}
+        if (
+          i + diff < secret.length &&
+          secret[i + diff] !== ""
+        ) {
+          if (secret[i + diff] == guess[i]) {
+            secret[i + diff] = "";
+            guess[i] = "";
+            clues[i] = 2;
+          }
+        } else
+        if (
+          i - diff >= 0 &&
+          secret[i - diff] !== ""
+        ) {
+          if (secret[i - diff] == guess[i]) {
+            secret[i - diff] = "";
+            guess[i] = "";
+            clues[i] = 2;
+          }
+        }
+      }
+    }
+    // all done
+    return clues;
   }
 }
 

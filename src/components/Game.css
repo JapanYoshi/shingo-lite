@@ -1,5 +1,6 @@
 /* display toggle */
 .game-root {
+  position: relative;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -23,4 +24,28 @@
 
 .kb-root {
   flex: 0 0 auto;
+}
+
+/* style the toolbar */
+
+.game-toolbar {
+  --btn-size: calc(var(--unit) * 3);
+  --btn-margin: calc(var(--unit) * 0.5);
+  position: absolute;
+  top: var(--btn-margin);
+  left: var(--btn-margin);
+  width: var(--btn-size);
+  height: calc(var(--btn-size) * 3 + var(--btn-margin * 4));
+}
+
+.game-toolbar > button {
+  width: var(--btn-size);
+  height: var(--btn-size);
+  margin-top: var(--btn-margin);
+  padding: 0;
+}
+
+.game-toolbar > button > img {
+  width: var(--btn-size);
+  height: var(--btn-size);
 }

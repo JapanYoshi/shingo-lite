@@ -2,6 +2,10 @@ import React, { createRef } from "react";
 import GameLogic from "./GameLogic.jsx";
 import Grid from "./grid/Grid.jsx";
 import Keyboard from "./keyboard/Keyboard.jsx";
+import iconExit from "../data/icon_exit.svg";
+import iconGiveUp from "../data/icon_giveup.svg";
+import iconRematch from "../data/icon_rematch.svg";
+import iconSettings from "../data/icon_settings.svg";
 import "./Game.css";
 
 const EMPTY_CELL = "·";
@@ -20,6 +24,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      gameInProgress: false,
       parent: props.parent ?? undefined,
       charCount: props.charCount ?? 0,
       secret: "",
@@ -35,7 +40,7 @@ class Game extends React.Component {
     /* functions */
     this.startGame = this.startGame.bind(this);
     //this.updateGuess = this.updateGuess.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    //this.submitGuess = this.submitGuess.bind(this);
     this.handleSetShavian = this.handleSetShavian.bind(this);
     /* end */
   }
@@ -43,6 +48,7 @@ class Game extends React.Component {
   async startGame(letterCount) {
     this.setState({
       status: "LOADING",
+      gameInProgress: true,
       charCount: letterCount,
       guessCount: 0,
     });
@@ -55,19 +61,57 @@ class Game extends React.Component {
     this.setState({
       secret: Array.from(secret[0]),
       secretLatin: secret[1],
-      guess: "",
+      guess: [],
       status: "GUESS",
+      statText: this.STAT_TEXT.GUESS[this.state.shavianMode],
     });
     let bestGuess = Array(this.state.secret.length).fill(EMPTY_CELL);
     bestGuess[0] = this.state.secret[0];
     this.setState({
       bestGuess: bestGuess,
     })
-    this.updateGuess("");
+    this.updateGuess(this.state.guess);
   }
+
+  handleKeyPress(label) {
+    console.log("Game.handleKeyPress(", label, ")");
+    switch(label) {
+      case "DELETE":
+        if (this.state.guess.length > 0) {
+          let newGuess = this.state.guess.subarray(0, this.state.guess.length - 1);
+          this.setState({
+            guess: newGuess,
+          });
+          this.updateGuess(newGuess);
+        }
+        break;
+      case "RETURN":
+        if (this.state.guess.length == this.state.charCount) {
+          this.submitGuess()
+        } else {
+          this.setState({
+            status: "TOO_SHORT",
+            statText: this.STAT_TEXT.TOO_SHORT.replace(
+              '{count}',
+              `${this.state.charCount - this.state.guess.length}`
+            ),
+          })
+        }
+        break;
+      default:
+        if (this.state.guess.length < this.state.charCount) {
+          let newGuess = [...this.state.guess, label];
+          this.setState({
+            guess: newGuess
+          });
+          this.updateGuess(newGuess);
+        }
+        break;
+    }
+  }
+
   // makes the grid show the current guess as we type
-  updateGuess(guess) {
-    let guessArr = Array.from(guess);
+  updateGuess(guessArr) {
     let previewArr = [
       ...guessArr,
       ...this.state.bestGuess.slice(guessArr.length)
@@ -76,14 +120,31 @@ class Game extends React.Component {
     this.Grid.current.updateGuess(previewArr, guessTiles);
   }
 
-  handleSubmit(event) {
-    console.log("Game.handleSubmit(", event, ");");
-    /*
-    this.setState({
-      
-    });
-    */
-   event.preventDefault();
+  submitGuess() {
+    console.log("Game.submitGuess(", this.state.guess, ");");
+    // is this guess valid?
+    let validation = GameLogic.isGuessable(
+      this.state.guess.join(""),
+      this.state.charCount
+    );
+    console.log("validation:", validation);
+    if (validation[0] != -1) {
+      this.setState({
+        status: 'CHECK',
+        statText: (this.STAT_TEXT.CHECK[this.state.shavianMode])
+        .replace('{word_shavian}', this.state.guess.join(""))
+        .replace('{word_latin}', validation[1]),
+      });
+      let clues = GameLogic.getClues(this.state.guess, this.state.secret);
+      console.log("clues:", clues);
+    } else {
+      this.setState({
+        status: 'INVALID',
+        statText: (this.STAT_TEXT.INVALID[this.state.shavianMode])
+        .replace('{word_shavian}', this.state.guess.join("")),
+      });
+    }
+    //event.preventDefault();
   }
 
   handleSetShavian(event) {
@@ -96,12 +157,16 @@ class Game extends React.Component {
   }
 
   render() {
-    let stat_text = this.STAT_TEXT[this.state.status][this.state.shavianMode];
     return (
       <div className="game-root">
-        <Grid ref={this.Grid}></Grid>
-        <div className="game-status" ref={this.Status}>{stat_text}</div>
-        <Keyboard ref={this.Keeb}></Keyboard>
+        <Grid ref={this.Grid} parent={this}></Grid>
+        <div className="game-toolbar">
+          <button className="game-button btnExit"><img src={iconExit}></img></button>
+          <button className="game-button btnGiveUp"><img src={this.state.gameInProgress ? iconGiveUp : iconRematch}></img></button>
+          <button className="game-button btnSettings"><img src={iconSettings}></img></button>
+        </div>
+        <div className="game-status" ref={this.Status}>{this.state.statText}</div>
+        <Keyboard ref={this.Keeb} parent={this}></Keyboard>
       </div>
     )
   }

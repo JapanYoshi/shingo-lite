@@ -4,10 +4,10 @@ import "./Keyboard.css";
 
 class Keyboard extends React.Component {
   LAYOUT = [
-    [     "𐑐", "𐑑", "𐑒", "𐑓", "𐑔", "𐑕", "𐑖", "𐑗", "𐑘", "𐑙"],
-    [     "𐑚", "𐑛", "𐑜", "𐑝", "𐑞", "𐑟", "𐑠", "𐑡", "𐑢", "𐑣"],
-    [     "𐑤", "𐑥", "𐑦", "𐑧", "𐑨", "𐑩", "𐑪", "𐑫", "𐑬", "𐑭"],
-    [     "𐑮", "𐑯", "𐑰", "𐑱", "𐑲", "𐑳", "𐑴", "𐑵", "𐑶", "𐑷"],
+    [     "𐑐", "𐑑", "𐑒", "𐑓", "𐑔", "𐑕", "𐑖", "𐑗", "𐑘", "𐑙"     ],
+    [     "𐑚", "𐑛", "𐑜", "𐑝", "𐑞", "𐑟", "𐑠", "𐑡", "𐑢", "𐑣"     ],
+    [     "𐑤", "𐑥", "𐑦", "𐑧", "𐑨", "𐑩", "𐑪", "𐑫", "𐑬", "𐑭"     ],
+    [     "𐑮", "𐑯", "𐑰", "𐑱", "𐑲", "𐑳", "𐑴", "𐑵", "𐑶", "𐑷"     ],
     ["DELETE", "𐑸", "𐑹", "𐑺", "𐑻", "𐑼", "𐑽", "𐑾", "𐑿", "RETURN"],
   ];
 
@@ -15,7 +15,8 @@ class Keyboard extends React.Component {
     super(props);
 
     this.state = {
-      active: true
+      active: true,
+      parent: props.parent,
     };
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -23,11 +24,7 @@ class Keyboard extends React.Component {
 
   handleKeyPress(label) {
     console.log("Keyboard.handleKeyPress(", label, ");");
-    /*
-    this.setState({
-      active: true
-    })
-    */
+    this.state.parent.handleKeyPress(label);
   }
 
   render() {
