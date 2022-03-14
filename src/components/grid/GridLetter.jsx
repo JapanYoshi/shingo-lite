@@ -12,9 +12,9 @@ class GridLetter extends React.Component {
     //console.log("GridLetter.constructor(", props, ")");
     super(props);
     this.state = {
-      label: "",
-      clue: 0,
-      clueLabel: CLUE_LABELS[props.clue],
+      label: props.label ?? "",
+      clue: props.clue ?? 0,
+      clueLabel: CLUE_LABELS[props.clue ?? 0],
     };
   }
   static getDerivedStateFromProps(props, state) {

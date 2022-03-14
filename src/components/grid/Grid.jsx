@@ -11,11 +11,20 @@ class Grid extends React.Component {
       tableIsValid: false,
       columns: props.columns ?? 1,
       rows: 7,
-      guessCount: 0,
     };
     this.setLetterCount(props.columns);
     this.handleClues = this.handleClues.bind(this);
     this.updateGuess = this.updateGuess.bind(this);
+    this.reset = this.reset.bind(this);
+  }
+
+  reset(){
+    this.setState({
+      tableIsValid: false,
+      columns: 1,
+    });
+    this.chars = undefined;
+    this.clues = undefined;
   }
 
   setLetterCount(letterCount) {
@@ -24,7 +33,6 @@ class Grid extends React.Component {
     }
     this.setState({
       tableIsValid: false,
-      guessCount: 0,
       columns: letterCount,
     });
     console.log("setLetterCount(", letterCount, ")");
@@ -37,8 +45,8 @@ class Grid extends React.Component {
     this.chars = chars;
     this.clues = clues;
     console.log("setLetterCount");
-    console.table(this.chars);
-    console.table(this.clues);
+    //console.table(this.chars);
+    //console.table(this.clues);
     if (this.chars.length < this.state.columns) {
       console.log("validation 0 failed");
     } else
@@ -49,20 +57,20 @@ class Grid extends React.Component {
     }
   }
 
-  updateGuess(guessArr, typedLetters) {
+  updateGuess(row, guessArr, typedLetters) {
     if (this.chars[0].length < guessArr.length) {
       this.setLetterCount(guessArr.length);
     }
-    console.log("updateGuess");
-    console.table(this.chars);
-    console.table(this.clues);
+    //console.log("updateGuess");
+    //console.table(this.chars);
+    //console.table(this.clues);
     for (let i = 0; i < this.state.columns; i++) {
-      this.chars[this.state.guessCount][i] = guessArr[i];
-      this.clues[this.state.guessCount][i] = (i < typedLetters) ? 0 : 4;
+      this.chars[row][i] = guessArr[i];
+      this.clues[row][i] = (i < typedLetters) ? 0 : 4;
     }
-    console.log("Grid.updateGuess(", guessArr, typedLetters, ")\n", this.chars, this.clues);
-    console.table(this.chars);
-    console.table(this.clues);
+    //console.log("Grid.updateGuess(", guessArr, typedLetters, ")\n", this.chars, this.clues);
+    //console.table(this.chars);
+    //console.table(this.clues);
     // force a render update
     this.setState({
       tableIsValid: true,
@@ -82,9 +90,9 @@ class Grid extends React.Component {
 
   render() {
     if (this.state.tableIsValid) {
-      console.log("render");
-      console.table(this.chars);
-      console.table(this.clues);
+      console.log("Grid.render()");
+      //console.table(this.chars);
+      //console.table(this.clues);
       const rows = [];
       for (let row = 0; row < this.state.rows; row++) {
         let thisRow = [];

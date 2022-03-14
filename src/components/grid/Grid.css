@@ -24,6 +24,7 @@
 
 /* grid letter */
 .grid-letter {
+  position: relative;
   width: var(--grid-letter-w);
   height: var(--grid-letter-h);
   line-height: var(--grid-letter-h);
@@ -50,4 +51,12 @@
 }
 .grid-letter.clue4 {
   background: var(--clue-blank);
+}
+
+.grid-clue-label {
+  position: absolute;
+  right: calc(var(--unit) * 0.5);
+  top: calc(var(--unit) * 0.125);
+  font-size: calc(var(--unit) * 1.25);;
+  line-height: 100%;
 }

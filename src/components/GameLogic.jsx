@@ -46,9 +46,14 @@ class GameLogic extends React.Component {
   }
   async loadWords(charCount) {
     console.log("gameState.loadWords()");
-    if (this.wordList[`char${charCount}`].length > 0) {
+    if (
+      this.wordList[`char` + charCount.toString(10)] &&
+      this.wordList[`char` + charCount.toString(10)].length > 0
+    ) {
+      console.log('GameLogic: ',charCount,'letter words are already loaded.');
       return;
     }
+    console.log('GameLogic: Now loading',charCount,'letter words.');
     const askable = fetch(
       {4: ask4, 5: ask5, 6: ask6, 7: ask7}[charCount],
     ).then((askable) => {
@@ -116,7 +121,12 @@ class GameLogic extends React.Component {
     return [-1, ""];
   }
 
-  getClues(guess, secret) {
+  getClues(guess_, secret_) {
+    // these values are Arrays and therefore passed by reference
+    // so we clone them in order to not modify the originals
+    let guess = [...guess_];
+    let secret = [...secret_];
+    console.log("GameLogic.getClues(",guess,", ",secret,");");
     let clues = new Array(secret.length);
     // get hits
     for (let i = 0; i < secret.length; i++) {
@@ -124,36 +134,46 @@ class GameLogic extends React.Component {
         secret[i] = "";
         guess[i] = "";
         clues[i] = 3;
+        console.log(`Clue ${i} is a hit!`);
       } else {
         clues[i] = 1;
+        console.log(`Clue ${i} is NOT a hit.`);
       }
+      console.log("GameLogic.getClues(",guess,", ",secret,");");
     }
+    console.log("Clues:",clues);
     // get grazes
     for (let diff = 1; diff < secret.length - 1; diff++) {
       for (let i = 0; i < secret.length; i++) {
-        if (guess[i] === "") {continue;}
+        if (clues[i] !== 1) {continue;}
         if (
           i + diff < secret.length &&
           secret[i + diff] !== ""
         ) {
+          console.log(`Looking forward from ${i} to ${i+diff}.`);
           if (secret[i + diff] == guess[i]) {
             secret[i + diff] = "";
             guess[i] = "";
             clues[i] = 2;
+            console.log(`Clue ${i} is a graze!`);
           }
         } else
         if (
           i - diff >= 0 &&
           secret[i - diff] !== ""
         ) {
+          console.log(`Looking backward from ${i} to ${i-diff}.`);
           if (secret[i - diff] == guess[i]) {
             secret[i - diff] = "";
             guess[i] = "";
             clues[i] = 2;
+            console.log(`Clue ${i} is a graze!`);
           }
         }
       }
+      console.log("GameLogic.getClues(",guess,", ",secret,");");
     }
+    console.log("Clues:",clues);
     // all done
     return clues;
   }

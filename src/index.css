@@ -5,7 +5,7 @@
   --text: #ffffff;
   /* letter tiles */
   --letter-text: #000000;
-  --clue-blank: #6b5d70;
+  --clue-blank: #7e6e84;
   --clue-none: #d8ccd5;
   --clue-miss: #7c8185;
   --clue-graze: #fcc946;
@@ -16,6 +16,14 @@
   --button-pressed: #80e0ff;
   /* sizing */
   --unit: calc(min(4vw, 3vh) * 0.5);
+  /* prevent text selection */
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
 body {

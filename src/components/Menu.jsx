@@ -20,7 +20,6 @@ class Menu extends React.Component {
       shavianMode: 1,
       charCount: 0,
     };
-    
     this.handleSetShavian = this.handleSetShavian.bind(this);
     this.handleStart = this.handleStart.bind(this);
   }
@@ -47,11 +46,6 @@ class Menu extends React.Component {
     //console.log("Game.handleStart(", event, ");");
     let letterCount = event.target.value;
     console.log(letterCount);
-    /*
-    this.setState({
-
-    });
-    */
     this.state.parent.startGame(letterCount);
     event.preventDefault();
   }

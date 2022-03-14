@@ -17,9 +17,25 @@ class Keyboard extends React.Component {
     this.state = {
       active: true,
       parent: props.parent,
+      clues: [],
     };
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  resetClues() {
+    this.setState({clues: []});
+  }
+
+  updateClue(key, value) {
+    if ((this.state.clues[key] ?? 0) < value) {
+      let clues = this.state.clues;
+      clues[key] = value;
+      this.setState({
+        clues
+      });
+      console.log("clues updated:",key, value, this.state.clues);
+    }
   }
 
   handleKeyPress(label) {
@@ -28,20 +44,25 @@ class Keyboard extends React.Component {
   }
 
   render() {
+    console.log("Keyboard.render()");
     let i = 0;
     const rows = this.LAYOUT.map((row) => {
       let keys = row.map((text) => {
-        switch (text) {
-        case "DELETE":
-          return <Key key={text} label="⌫"    onClickFunc={() => {this.handleKeyPress(text)}}></Key>
-        case "RETURN":
-          return <Key key={text} label="⏎"    onClickFunc={() => {this.handleKeyPress(text)}}></Key>
-        default:
-          return <Key key={text} label={text} onClickFunc={() => {this.handleKeyPress(text)}}></Key>
-        }
+        return (
+          <Key
+            key={"kb_key_" + text}
+            label={(
+              (text === "DELETE") ? "⌫" : (
+                (text === "RETURN") ? "⏎" : text
+              )
+            )}
+            clue={this.state.clues[text] ?? 0}
+            onClickFunc={() => {this.handleKeyPress(text)}}>
+          </Key>
+        )
       });
       i += 1;
-      return <div key={`row${i}`} className="kb-row">
+      return <div key={`kb_row_${i}`} className="kb-row">
         {keys}
       </div>;
     })

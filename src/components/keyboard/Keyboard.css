@@ -19,6 +19,7 @@
 }
 
 .kb-key {
+  position: relative;
   width: var(--key-width);
   height: var(--key-height);
   margin-right: var(--key-margin);
@@ -26,4 +27,28 @@
 
 .kb-key:last-child {
   margin-right: 0;
+}
+
+.kb-key.clue0 {
+  background: var(--clue-none);
+}
+.kb-key.clue1 {
+  background: var(--clue-miss);
+}
+.kb-key.clue2 {
+  background: var(--clue-graze);
+}
+.kb-key.clue3 {
+  background: var(--clue-hit);
+}
+.kb-key.clue4 {
+  background: var(--clue-blank);
+}
+
+.kb-clue-label {
+  position: absolute;
+  right: calc(var(--unit) * 0.5);
+  top: calc(var(--unit) * 0.125);
+  font-size: calc(var(--unit) * 1.25);;
+  line-height: 100%;
 }
